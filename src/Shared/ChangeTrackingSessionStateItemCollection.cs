@@ -16,7 +16,7 @@ namespace Microsoft.Web.Redis
        during any request cycle. We use this list to indentify if we want to change any session item or not.*/
     internal class ChangeTrackingSessionStateItemCollection : NameObjectCollectionBase, ISessionStateItemCollection, ICollection, IEnumerable
     {
-        SessionStateItemCollection innerCollection;
+        ISessionStateItemCollection innerCollection;
         // key is "session key in lowercase" and value is "actual session key in actual case"
         Dictionary<string, string> allKeys = new Dictionary<string, string>();
         HashSet<string> modifiedKeys = new HashSet<string>();
@@ -65,7 +65,7 @@ namespace Microsoft.Web.Redis
 
         public ChangeTrackingSessionStateItemCollection()
         {
-            innerCollection = new SessionStateItemCollection();
+            innerCollection = new Microsoft.Web.Redis.SessionStateItemCollectionWrapper();
         }
 
         public void Clear()
