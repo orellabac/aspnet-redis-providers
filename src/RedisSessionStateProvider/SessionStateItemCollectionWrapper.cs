@@ -16,20 +16,8 @@ namespace Microsoft.Web.Redis
     /// </summary>
     internal class SessionStateItemCollectionWrapper : ISessionStateItemCollection, ICollection
     {
-        OrderedDictionary old = new OrderedDictionary();
+        OrderedDictionary old = new OrderedDictionary(StringComparer.Ordinal);
         bool dirty;
-        SessionStateItemCollection old2 = new SessionStateItemCollection();
-        //object serializedItemsLock;
-        //private object _serializedItems;
-        internal SessionStateItemCollectionWrapper()
-        {
-            /*var test = TypeAccessor.Create(typeof(SessionStateItemCollection), true);
-            serializedItemsLock = test[old2, "_serializedItemsLock"];
-            _serializedItems = test[old2, "_serializedItems"];
-            var _readonly = test[old2, "_readOnly"];
-            test[]*/
-
-        }
 
         public object this[int index]
         {
@@ -43,14 +31,8 @@ namespace Microsoft.Web.Redis
             {
                 dirty = true;
                 old[index] = value;
-                //throw new NotImplementedException();
             }
         }
-
-    /*    public class MyHashTableKeyWrapper : NameObjectCollectionBase.KeysCollection
-        {
-
-        }*/
 
 
         public NameObjectCollectionBase.KeysCollection Keys {
